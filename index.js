@@ -15,10 +15,10 @@ server.get('/api/users', (req, res) => {
         .then(users => {
             res.status(200).json(users)
         })
-    .catch(error => {
-        console.log("error on GET /user", error);
-        res.status(500).json({errorMessage: "The user information could not be retrieved."});
-    }); 
+        .catch(error => {
+            console.log("error on GET /user", error);
+            res.status(500).json({errorMessage: "The user information could not be retrieved."});
+        });
 })
 
 server.get('/api/users/:id', (req, res) => {
@@ -64,19 +64,19 @@ server.delete('/api/users/:id', (req, res) => {
 server.put('/api/users/:id', (req, res) => {
     const {id} = req.params;
     Db.update(id, req.body)
-    .then(user => {
-        if (!user){
-            res.status(404).json({errorMessage: "The user with the specified ID does not exist."})
-        } else if ((req.body.name.length < 1) || (req.body.bio.length < 1)){
-            res.status(400).json({errorMessage:  "Please provide name and bio for the user." })
-        } else {
-           res.status(200).json(user); 
-        }
-    })
-    .catch(error => {
-        console.log("error on DELETE /hubs", error);
-        res.status(500).json({errorMessage:  "The user information could not be modified."});
-    });
+        .then(user => {
+            if (!user){
+                res.status(404).json({errorMessage: "The user with the specified ID does not exist."})
+            } else if ((req.body.name.length < 1) || (req.body.bio.length < 1)){
+                res.status(400).json({errorMessage:  "Please provide name and bio for the user." })
+            } else {
+                res.status(200).json(user); 
+            }
+        })
+        .catch(error => {
+            console.log("error on DELETE /hubs", error);
+            res.status(500).json({errorMessage:  "The user information could not be modified."});
+        });
 });
 
 
